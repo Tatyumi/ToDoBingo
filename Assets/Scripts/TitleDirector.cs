@@ -11,13 +11,13 @@ public class TitleDirector : MonoBehaviour
     /// <summary>オーディオボックス</summary>
     public GameObject audioBoxObj;
     /// <summary>オーディオボックスコントローラスクリプト</summary>
-    private AudioBoxController audioBoxController;
+    private AudioManager audioBoxController;
 
     // Use this for initialization
     void Start()
     {
         //BGM再生
-        audioBoxController = audioBoxObj.GetComponent<AudioBoxController>();
+        audioBoxController = audioBoxObj.GetComponent<AudioManager>();
         audioBoxController.PlayTitleSceneBgm();
         endPanelObj.SetActive(false);
     }

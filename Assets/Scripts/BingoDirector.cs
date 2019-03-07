@@ -33,7 +33,7 @@ public class BingoDirector : MonoBehaviour
     /// <summary>オーディオボックス</summary>
     private GameObject audioBoxObj;
     /// <summary>オーディオボックスコントローラスクリプト</summary>
-    public AudioBoxController audioBoxController;
+    public AudioManager audioBoxController;
     /// <summary>選択しているビンゴマスの番号</summary>
     private int cursorNumber = BINGO_SHEET_LENGTH * BINGO_SHEET_RANK;
 
@@ -55,8 +55,8 @@ public class BingoDirector : MonoBehaviour
     void Start()
     {
         //オーディオボックスを取得
-        audioBoxObj = GameObject.Find("AudioBox");
-        audioBoxController = audioBoxObj.GetComponent<AudioBoxController>();
+        audioBoxObj = GameObject.Find("AudioManager");
+        audioBoxController = audioBoxObj.GetComponent<AudioManager>();
 
         //バックパネルを非表示
         titleBackPanelObj.gameObject.SetActive(false);
