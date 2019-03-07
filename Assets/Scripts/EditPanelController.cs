@@ -49,7 +49,7 @@ public class EditPanelController : MonoBehaviour
 
         //テキストフィールド初期表示
         //BingoDirectorScript.textFieldObj.GetComponent<Text>().text = BingoDirectorScript.todoMemo[0];
-        BingoDirectorScript.textFieldObj.GetComponent<Text>().text = "マスを選択してください";
+        BingoDirectorScript.TodoTextObj.GetComponent<Text>().text = "マスを選択してください";
     }
 
     /// <summary>
@@ -66,13 +66,13 @@ public class EditPanelController : MonoBehaviour
             foreach (Transform todo in todoList)
             {
                 //入力フィールドのテキストを保存&ビンゴモードのテキストフィールドに代入できるようtodomemoに代入
-                BingoDirectorScript.todoMemo[count] = todo.Find("Text").gameObject.GetComponent<Text>().text;
+                BingoDirectorScript.TodoLists[count] = todo.Find("Text").gameObject.GetComponent<Text>().text;
                 PlayerPrefs.SetString("TODOLIST" + count, todo.Find("Text").gameObject.GetComponent<Text>().text);
                 count++;
             }
         }
 
-        BingoDirectorScript.audioBoxController.PlaySaveTodoListSe();
+        BingoDirectorScript.AudioManager.PlaySaveTodoListSe();
         naviText.text = "BingoMode";
         //EditPanelを非表示
         this.gameObject.SetActive(false);
@@ -83,7 +83,7 @@ public class EditPanelController : MonoBehaviour
     /// </summary>
     public void DisplayEditPanel()
     {
-        BingoDirectorScript.audioBoxController.PlayDisplayPanelSe();
+        BingoDirectorScript.AudioManager.PlayDisplayPanelSe();
         this.gameObject.SetActive(true);
         naviText.text = "EditMode";
     }

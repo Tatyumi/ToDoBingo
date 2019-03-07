@@ -959,8 +959,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55d4bc816af3db43b174c0acdbdff30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPanelObj: {fileID: 2113035051}
-  audioBoxObj: {fileID: 2016415132}
+  EndPanelObj: {fileID: 2113035051}
+  AudioManagerObj: {fileID: 2016415132}
 --- !u!1 &808837527
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,7 +2201,7 @@ GameObject:
   - component: {fileID: 2016415134}
   - component: {fileID: 2016415133}
   m_Layer: 0
-  m_Name: AudioBox
+  m_Name: AudioManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2218,17 +2218,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4cac895a6de3a47b491e1d815938e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleSceneBgm: {fileID: 8300000, guid: 161aa089f5b0f824eac6c6b303f2fbea, type: 3}
-  bingoSceneBgm: {fileID: 8300000, guid: 75c6cfdf6c97fc447a8054c10d661ccd, type: 3}
-  selectedMassSe: {fileID: 8300000, guid: ce6478352b49ab94eb9cb275a1dfa688, type: 3}
-  switchHollSe: {fileID: 8300000, guid: 160b9b2dbd38e9945bea067b25588a06, type: 3}
-  checkBingoSe: {fileID: 8300000, guid: 3f67b1767f39f9e4d8266e0f47c30cc5, type: 3}
-  editButtonSe: {fileID: 0}
-  backButtonSe: {fileID: 8300000, guid: c3e77c6bcb34a334bb19925a970640ee, type: 3}
-  displayPanelSe: {fileID: 8300000, guid: f94c3983a35d0234184b2007f915df7c, type: 3}
-  noButtonSe: {fileID: 8300000, guid: e67c42c04d7af844b8e954687d157740, type: 3}
-  saveTodoListSe: {fileID: 8300000, guid: cdd57a3f0ee9add46b30c1c4e3179dd1, type: 3}
-  moveSceneSe: {fileID: 8300000, guid: 971374d751e230946b236cc0965ce5f5, type: 3}
+  TitleSceneBGM: {fileID: 0}
+  TingoSceneBGM: {fileID: 0}
+  SelectedMassSE: {fileID: 0}
+  SwitchHollSE: {fileID: 0}
+  CheckBingoSE: {fileID: 0}
+  EditButtonSE: {fileID: 0}
+  BackButtonSE: {fileID: 0}
+  DisplayPanelSE: {fileID: 0}
+  NoButtonSE: {fileID: 0}
+  SaveTodoListSE: {fileID: 0}
+  MoveSceneSE: {fileID: 0}
 --- !u!82 &2016415134
 AudioSource:
   m_ObjectHideFlags: 0

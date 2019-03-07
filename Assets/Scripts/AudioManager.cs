@@ -4,36 +4,40 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    /// <summary>タイトルシーンのBGM</summary>
+    public AudioClip TitleSceneBGM;
+    /// <summary>ビンゴシーンのBGM</summary>
+    public AudioClip BingoSceneBGM;
+    /// <summary>マスを選択した時のSE</summary>
+    public AudioClip SelectedMassSE;
+    /// <summary>マスの穴をきりかえるときのSE</summary>
+    public AudioClip SwitchHollSE;
+    /// <summary>ビンゴチェックのSE</summary>
+    public AudioClip CheckBingoSE;
+    /// <summary>エディットボタン押下時のSE</summary>
+    public AudioClip EditButtonSE;
+    /// <summary>バックボタン押下時のSE</summary>
+    public AudioClip BackButtonSE;
+    /// <summary>パネル表示SE</summary>
+    public AudioClip DisplayPanelSE;
+    /// <summary>Noボタン押下時SE</summary>
+    public AudioClip NoButtonSE;
+    /// <summary>TODOリスト保存時SE</summary>
+    public AudioClip SaveTodoListSE;
+    /// <summary>シーン遷移時SE</summary>
+    public AudioClip MoveSceneSE;
+
     AudioSource audioSource;
 
-    /// <summary>タイトルシーンのBGM</summary>
-    public AudioClip titleSceneBgm;
-    /// <summary>ビンゴシーンのBGM</summary>
-    public AudioClip bingoSceneBgm;
-    /// <summary>マスを選択した時のSE</summary>
-    public AudioClip selectedMassSe;
-    /// <summary>マスの穴をきりかえるときのSE</summary>
-    public AudioClip switchHollSe;
-    /// <summary>ビンゴチェックのSE</summary>
-    public AudioClip checkBingoSe;
-    /// <summary>エディットボタン押下時のSE</summary>
-    public AudioClip editButtonSe;
-    /// <summary>バックボタン押下時のSE</summary>
-    public AudioClip backButtonSe;
-    /// <summary>パネル表示SE</summary>
-    public AudioClip displayPanelSe;
-    /// <summary>Noボタン押下時SE</summary>
-    public AudioClip noButtonSe;
-    /// <summary>TODOリスト保存時SE</summary>
-    public AudioClip saveTodoListSe;
-    /// <summary>シーン遷移時SE</summary>
-    public AudioClip moveSceneSe;
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
 
     // Use this for initialization
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         //シーンが遷移しても破棄されない
         DontDestroyOnLoad(gameObject);
     }
@@ -47,7 +51,7 @@ public class AudioManager : MonoBehaviour
         {
             audioSource = GetComponent<AudioSource>();
         }
-        audioSource.PlayOneShot(titleSceneBgm);
+        audioSource.PlayOneShot(TitleSceneBGM);
     }
 
     /// <summary>
@@ -59,7 +63,7 @@ public class AudioManager : MonoBehaviour
         {
             audioSource = GetComponent<AudioSource>();
         }
-        audioSource.PlayOneShot(bingoSceneBgm);
+        audioSource.PlayOneShot(BingoSceneBGM);
     }
 
     /// <summary>
@@ -67,7 +71,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlaySelectedMassSe()
     {
-        audioSource.PlayOneShot(selectedMassSe);
+        audioSource.PlayOneShot(SelectedMassSE);
     }
 
     /// <summary>
@@ -75,7 +79,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlaySwitchHollSe()
     {
-        audioSource.PlayOneShot(switchHollSe);
+        audioSource.PlayOneShot(SwitchHollSE);
     }
 
     /// <summary>
@@ -83,7 +87,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlayCheckBingoSe()
     {
-        audioSource.PlayOneShot(checkBingoSe);
+        audioSource.PlayOneShot(CheckBingoSE);
     }
 
     /// <summary>
@@ -91,7 +95,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlayEditButtonSe()
     {
-        audioSource.PlayOneShot(editButtonSe);
+        audioSource.PlayOneShot(EditButtonSE);
     }
 
     /// <summary>
@@ -99,7 +103,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlayBackButtonSe()
     {
-        audioSource.PlayOneShot(backButtonSe);
+        audioSource.PlayOneShot(BackButtonSE);
     }
 
     /// <summary>
@@ -107,7 +111,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlayDisplayPanelSe()
     {
-        audioSource.PlayOneShot(displayPanelSe);
+        audioSource.PlayOneShot(DisplayPanelSE);
     }
 
     /// <summary>
@@ -115,7 +119,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlayNoButtonSe()
     {
-        audioSource.PlayOneShot(noButtonSe);
+        audioSource.PlayOneShot(NoButtonSE);
     }
 
     /// <summary>
@@ -123,7 +127,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlaySaveTodoListSe()
     {
-        audioSource.PlayOneShot(saveTodoListSe);
+        audioSource.PlayOneShot(SaveTodoListSE);
     }
 
     /// <summary>
@@ -131,7 +135,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlayMoveSceneSe()
     {
-        audioSource.PlayOneShot(moveSceneSe);
+        audioSource.PlayOneShot(MoveSceneSE);
     }
 
     /// <summary>

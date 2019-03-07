@@ -7,19 +7,23 @@ public class TitleDirector : MonoBehaviour
 {
 
     /// <summary>エンドパネル</summary>
-    public GameObject endPanelObj;
-    /// <summary>オーディオボックス</summary>
-    public GameObject audioBoxObj;
-    /// <summary>オーディオボックスコントローラスクリプト</summary>
-    private AudioManager audioBoxController;
+    public GameObject EndPanelObj;
+    /// <summary>オーディオマネージャーオブジェクト</summary>
+    public GameObject AudioManagerObj;
+    /// <summary>オーディオマネージャー</summary>
+    private AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = AudioManagerObj.GetComponent<AudioManager>();
+    }
 
     // Use this for initialization
     void Start()
     {
         //BGM再生
-        audioBoxController = audioBoxObj.GetComponent<AudioManager>();
-        audioBoxController.PlayTitleSceneBgm();
-        endPanelObj.SetActive(false);
+        audioManager.PlayTitleSceneBgm();
+        EndPanelObj.SetActive(false);
     }
 
     // Update is called once per frame
@@ -29,16 +33,16 @@ public class TitleDirector : MonoBehaviour
         //バックボタンが押された場合
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            audioBoxController.PlayBackButtonSe();
+            audioManager.PlayBackButtonSe();
             //エンドパネルの表示
-            endPanelObj.SetActive(true);
+            EndPanelObj.SetActive(true);
         }
 
         //  画面のタップ判定
-        if (Input.GetMouseButtonDown(0) && !endPanelObj.activeSelf)
+        if (Input.GetMouseButtonDown(0) && !EndPanelObj.activeSelf)
         {
-            audioBoxController.StopMusic();
-            audioBoxController.PlayMoveSceneSe();
+            audioManager.StopMusic();
+            audioManager.PlayMoveSceneSe();
             //ビンゴ画面に遷移
             SceneManager.LoadScene("BingoScene");
         }
@@ -61,13 +65,13 @@ public class TitleDirector : MonoBehaviour
         if (gameObj.activeSelf)
         {
             //アクティブの場合
-            audioBoxController.PlayNoButtonSe();
+            audioManager.PlayNoButtonSe();
             gameObj.SetActive(false);
         }
         else
         {
             //非アクティブの場合
-            audioBoxController.PlayDisplayPanelSe();
+            audioManager.PlayDisplayPanelSe();
             gameObj.SetActive(true);
         }
     }
