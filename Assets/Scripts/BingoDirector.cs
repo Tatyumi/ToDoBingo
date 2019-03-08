@@ -1,22 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Reflection;
 using System;
 using UnityEngine.SceneManagement;
-
+using CommonConstans;
 
 public class BingoDirector : MonoBehaviour
 {
-    /// <summary>横マスの数</summary>
-    public const int BINGO_SHEET_LENGTH = 3;
-    /// <summary>縦マスの数</summary>
-    public const int BINGO_SHEET_RANK = 3;
     /// <summary>マスの穴の状態リスト</summary>
-    private bool[] isHolls = new bool[BINGO_SHEET_LENGTH * BINGO_SHEET_RANK];
+    private bool[] isHolls = new bool[Value.BINGO_SHEET_LENGTH * Value.BINGO_SHEET_RANK];
     /// <summary>TODOリスト</summary>
-    public string[] TodoLists = new string[BINGO_SHEET_LENGTH * BINGO_SHEET_RANK];
+    public string[] TodoLists = new string[Value.BINGO_SHEET_LENGTH * Value.BINGO_SHEET_RANK];
     /// <summary>TODOテキストフィールドに表示されるテキスト</summary>
     public GameObject TodoTextObj;
     /// <summary>タイトルバックパネル</summary>
@@ -30,9 +23,9 @@ public class BingoDirector : MonoBehaviour
     /// <summary>オーディオボックス</summary>
     private GameObject audioManagerObj;
     /// <summary>選択しているビンゴマスの番号</summary>
-    private int cursorNumber = BINGO_SHEET_LENGTH * BINGO_SHEET_RANK;
+    private int cursorNumber = Value.BINGO_SHEET_LENGTH * Value.BINGO_SHEET_RANK;
     /// <summary>ビンゴの最大数</summary>
-    private int maxBingoCount = BINGO_SHEET_LENGTH + BINGO_SHEET_RANK + 2;
+    private int maxBingoCount = Value.BINGO_SHEET_LENGTH + Value.BINGO_SHEET_RANK + 2;
 
     // ビンゴマス目(位置)を表す列挙
     public enum ButtonPos
@@ -47,34 +40,33 @@ public class BingoDirector : MonoBehaviour
         BottomCenter,   //下段真ん中
         BottomRight     //下段右
     }
-
-    // Use this for initialization
+    
     void Start()
     {
-        //オーディオボックスを取得
-        audioManagerObj = GameObject.Find("AudioManager");
+        // オーディオマネージャーを取得
+        audioManagerObj = GameObject.Find(ObjectName.AUDIO_MANAGER);
         AudioManager = audioManagerObj.GetComponent<AudioManager>();
 
-        //バックパネルを非表示
+        // バックパネルを非表示
         TitleBackPanelObj.gameObject.SetActive(false);
         Transform bingoButtons = BingoSheetObj.GetComponentInChildren<Transform>();
         int count = 0;
 
-        //アプリが初回表示かどうか判別
-        if (PlayerPrefs.GetInt("FIRSTSTART") != 0)
+        // アプリが初回表示かどうか判別
+        if (PlayerPrefs.GetInt(SaveKey.FIRST_START_KEY) != 0)
         {
-            //前回のビンゴマスの状態を取得
+            // 前回のビンゴマスの状態を取得
             foreach (Transform button in bingoButtons)
             {
                 isHolls[count] = (System.Convert.ToBoolean(PlayerPrefs.GetString("HOLL" + count)));
-                button.transform.Find("HollImage").GetComponent<Image>().enabled = isHolls[count];
+                button.transform.Find(ObjectName.HOLL_IMAGE).GetComponent<Image>().enabled = isHolls[count];
                 count++;
             }
 
-            //初期状態のビンゴ状態をチェック
-            if (PlayerPrefs.GetString("BINGOCOUNT") != "")
+            // 初期状態のビンゴ状態をチェック
+            if (PlayerPrefs.GetString(SaveKey.BINGO_COUNT_KEY) != "")
             {
-                BingoCountTextObj.GetComponent<Text>().text = PlayerPrefs.GetString("BINGOCOUNT");
+                BingoCountTextObj.GetComponent<Text>().text = PlayerPrefs.GetString(SaveKey.BINGO_COUNT_KEY);
             }
         }
         AudioManager.PlayBingoSceneBgm();
@@ -82,11 +74,12 @@ public class BingoDirector : MonoBehaviour
 
     private void Update()
     {
-        //バックボタンが押された場合
+        // バックボタンが押された場合
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             AudioManager.PlayBackButtonSe();
-            //タイトル画面に戻るのを促す画面を表示する
+
+            // タイトル画面に戻るのを促す画面を表示する
             TitleBackPanelObj.gameObject.SetActive(true);
         }
     }
@@ -98,7 +91,7 @@ public class BingoDirector : MonoBehaviour
     public void SwitchHoll(GameObject btnObj)
     {
         // ビンゴマスのマスの状態と，番号を取得
-        Image holl = btnObj.transform.Find("HollImage").GetComponent<Image>();
+        Image holl = btnObj.transform.Find(ObjectName.HOLL_IMAGE).GetComponent<Image>();
         Text number = btnObj.transform.Find("Text").GetComponent<Text>();
 
         //カーゾルが当たっているマスと同じマスをタップした場合
@@ -144,8 +137,8 @@ public class BingoDirector : MonoBehaviour
     public void CheckBingo()
     {
         int bingoCount = 0;
-        int massCount = BINGO_SHEET_LENGTH * BINGO_SHEET_RANK;
         int massNumber = 0;
+        int massCount = Value.BINGO_SHEET_LENGTH * Value.BINGO_SHEET_RANK;
 
         // 横列のチェック
         while (massNumber < massCount)
@@ -153,7 +146,7 @@ public class BingoDirector : MonoBehaviour
             bool isBingo = true;
 
             //横一列穴があいている状態かチェック
-            for (int i = massNumber; i < BINGO_SHEET_LENGTH + massNumber; i++)
+            for (int i = massNumber; i < Value.BINGO_SHEET_LENGTH + massNumber; i++)
             {
                 if (!isHolls[i])
                 {
@@ -166,18 +159,18 @@ public class BingoDirector : MonoBehaviour
                 bingoCount++;
             }
 
-            massNumber += BINGO_SHEET_LENGTH;
+            massNumber += Value.BINGO_SHEET_LENGTH;
         }
 
         massNumber = 0;
 
         //  縦列のチェック
-        while (massNumber < BINGO_SHEET_RANK)
+        while (massNumber < Value.BINGO_SHEET_RANK)
         {
             bool isBingo = true;
 
             //縦の列チェック
-            for (int i = massNumber; i < massCount; i += BINGO_SHEET_LENGTH)
+            for (int i = massNumber; i < massCount; i += Value.BINGO_SHEET_LENGTH)
             {
                 //縦列の内1つでも穴が開いていない場合
                 if (!isHolls[i])
@@ -196,9 +189,9 @@ public class BingoDirector : MonoBehaviour
 
         massNumber = 0;
         int trueCount = 0;
-        //  斜列のチェック
-        //BINGO_SHEET_LENGTH+1のパターン
-        for (int i = massNumber; i < BINGO_SHEET_LENGTH * BINGO_SHEET_RANK; i += BINGO_SHEET_LENGTH + 1)
+
+        // 斜列のチェック
+        for (int i = massNumber; i < Value.BINGO_SHEET_LENGTH * Value.BINGO_SHEET_RANK; i += Value.BINGO_SHEET_LENGTH + 1)
         {
 
             if (isHolls[i])
@@ -207,15 +200,15 @@ public class BingoDirector : MonoBehaviour
             }
         }
 
-        if (trueCount == BINGO_SHEET_LENGTH)
+        if (trueCount == Value.BINGO_SHEET_LENGTH)
         {
             bingoCount++;
         }
 
         trueCount = 0;
 
-        //BINGO_SHEET_LENGTH-1のパターン
-        for (int i = BINGO_SHEET_LENGTH - 1; i < BINGO_SHEET_LENGTH * BINGO_SHEET_RANK - 1; i += BINGO_SHEET_LENGTH - 1)
+        // BINGO_SHEET_LENGTH-1のパターン
+        for (int i = Value.BINGO_SHEET_LENGTH - 1; i < Value.BINGO_SHEET_LENGTH * Value.BINGO_SHEET_RANK - 1; i += Value.BINGO_SHEET_LENGTH - 1)
         {
             if (isHolls[i])
             {
@@ -223,12 +216,12 @@ public class BingoDirector : MonoBehaviour
             }
         }
 
-        if (trueCount == BINGO_SHEET_LENGTH)
+        if (trueCount == Value.BINGO_SHEET_LENGTH)
         {
             bingoCount++;
         }
 
-        ////  ビンゴ数の表示
+        // ビンゴ数の表示
         Text bingoCountText = BingoCountTextObj.GetComponent<Text>();
 
         // ビンゴの数がマックス値かどうか
@@ -240,13 +233,16 @@ public class BingoDirector : MonoBehaviour
         {
             bingoCountText.text = bingoCount + " BINGO!";
         }
-        PlayerPrefs.SetString("BINGOCOUNT", bingoCountText.text);
+
+        //ビンゴ数の保存        
+        PlayerPrefs.SetString(SaveKey.BINGO_COUNT_KEY, bingoCountText.text);
 
         //ビンゴ状態の保存
         for (int i = 0; i < isHolls.Length; i++)
         {
             PlayerPrefs.SetString("HOLL" + i, isHolls[i].ToString());
         }
+
         AudioManager.PlayCheckBingoSe();
     }
 
@@ -269,7 +265,6 @@ public class BingoDirector : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// タイトル画面に遷移する
     /// </summary>
@@ -279,6 +274,6 @@ public class BingoDirector : MonoBehaviour
         AudioManager.StopMusic();
 
         AudioManager.PlayMoveSceneSe();
-        SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene(SceneName.TITLE_SCENE_NAME);
     }
 }

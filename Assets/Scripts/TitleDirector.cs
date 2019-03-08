@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using CommonConstans;
 
 public class TitleDirector : MonoBehaviour
 {
@@ -44,7 +43,7 @@ public class TitleDirector : MonoBehaviour
             audioManager.StopMusic();
             audioManager.PlayMoveSceneSe();
             //ビンゴ画面に遷移
-            SceneManager.LoadScene("BingoScene");
+            SceneManager.LoadScene(SceneName.BINGO_SCENE_NAME);
         }
     }
 
